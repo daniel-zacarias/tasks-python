@@ -8,7 +8,7 @@ from api.utils.cripto_password import hash_password
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
-router = APIRouter()
+router = APIRouter(prefix="/users")
 
 @router.post("/")
 async def create_user(user: InputCreateUserDto, session: AsyncSession  = Depends(Database().session)):

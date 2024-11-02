@@ -8,7 +8,7 @@ class Task(CommonFields):
 
     name = Column(String, index=True, nullable=False)
     description = Column(String)
-    start_date = Column(DateTime)
-    end_date = Column(DateTime)
+    start_date = Column(DateTime(timezone=True))
+    end_date = Column(DateTime(timezone=True))
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="tasks")
