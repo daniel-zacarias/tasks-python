@@ -10,3 +10,8 @@ class OutputCreateUserDto(BaseModel):
     id: int = Field(..., description="Id do usuário")
     name: str = Field(..., description="Nome do usuário")
     email: str = Field(..., description="Email do usuário")
+
+class OutputTokenUserDto(BaseModel):
+    id: int = Field(..., description="Id do usuário")
+    name: str = Field(..., description="Nome do usuário")
+    email: str = Field(..., description="Email do usuário")

@@ -1,8 +1,8 @@
+from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.dto.user import OutputCreateUserDto
 from api.entities.user import User
-from api.entities.task import Task
 from api.models.user import UserModel
 
 async def create_user(user: UserModel, session: AsyncSession):
@@ -19,3 +19,8 @@ async def create_user(user: UserModel, session: AsyncSession):
         name=insert_user.name,
         email=insert_user.email
     )
+
+async def get_user(email: str, session: AsyncSession):
+    result = await session.execute(select(User).where(User.email == email))
+    user = result.scalar_one()
+    return user
