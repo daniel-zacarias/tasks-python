@@ -11,6 +11,7 @@ from api.dto.user import OutputTokenUserDto
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 async def authenticate_user(username: str, password: str, session):
     user = await get_user(username, session)
     if not user:
@@ -30,7 +31,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = encode(to_encode, SECRET_KEY, algorithm="HS256")
     return encoded_jwt
 
-async def get_current_user(token: str = Depends(oauth2_scheme), session = Depends(Database().session)):
+
+async def get_current_user(token: str = Depends(oauth2_scheme),
+                           session=Depends(Database().session)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -50,7 +53,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), session = Depend
     if user is None:
         raise credentials_exception
     return OutputTokenUserDto(
-        id = user.id,
-        name= user.name,
-        email= user.email
+        id=user.id,
+        name=user.name,
+        email=user.email
     )

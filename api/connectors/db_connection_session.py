@@ -1,5 +1,4 @@
-from contextlib import contextmanager
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 from api.entities.base import CommonFields
 from constants import DATABASE_URL

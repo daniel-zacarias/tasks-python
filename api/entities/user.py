@@ -2,6 +2,7 @@ from sqlalchemy import Column, String
 from api.entities.base import CommonFields
 from sqlalchemy.orm import relationship
 
+
 class User(CommonFields):
     __tablename__ = "users"
 

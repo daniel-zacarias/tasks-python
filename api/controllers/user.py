@@ -10,8 +10,10 @@ from sqlalchemy.exc import IntegrityError
 
 router = APIRouter(prefix="/users")
 
+
 @router.post("/")
-async def create_user(user: InputCreateUserDto, session: AsyncSession  = Depends(Database().session)):
+async def create_user(user: InputCreateUserDto,
+                      session: AsyncSession = Depends(Database().session)):
     user_model = UserModel(
         name=user.name,
         email=user.email,
@@ -30,5 +32,3 @@ async def create_user(user: InputCreateUserDto, session: AsyncSession  = Depends
                 "Message": "Email alredy exists"
             }
         )
-        
-    

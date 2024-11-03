@@ -5,6 +5,7 @@ from api.controllers import user_router, task_router, auth_router
 
 from constants import ENV
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     database = Database()
@@ -18,6 +19,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user_router)
 app.include_router(task_router)
 app.include_router(auth_router)
+
 
 @app.get("/")
 def read_root():
