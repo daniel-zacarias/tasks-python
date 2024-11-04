@@ -1,7 +1,8 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-
-from api.entities.base import CommonFields
-from constants import DATABASE_URL
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.infraestructure.orm_models.base import CommonFields
+from app.constants import DATABASE_URL
 
 
 class Database:
@@ -15,9 +16,13 @@ class Database:
                                                              expire_on_commit=False)
         return cls._instance
 
-    async def session(self):
-        async with self.async_session() as session:
-            yield session
+    def session_maker(self):
+        return sessionmaker(
+                autocommit=False,
+                autoflush=False,
+                bind=self.engine,
+                class_=AsyncSession
+            )
 
     async def init_models(self):
         self.engine = create_async_engine(DATABASE_URL, connect_args={"check_same_thread": False})

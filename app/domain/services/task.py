@@ -1,9 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.dto.task import OutputCreateTaskDto, OutputCreateTaskUserDto
-from api.entities.task import Task
-from api.models.task import TaskModel
-from api.models.user import UserModel
+from app.schemas.task import OutputCreateTaskDto, OutputCreateTaskUserDto, TaskModel
+from app.infraestructure.orm_models.task import Task
+from app.schemas.user import UserModel
 
 
 async def create_task(task: TaskModel, user: UserModel, session: AsyncSession):

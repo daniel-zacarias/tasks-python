@@ -1,9 +1,9 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from api.connectors.db_connection_session import Database
-from api.controllers import user_router, task_router, auth_router
+from app.infraestructure.database import Database
+from app.api.routes import user_router, task_router, auth_router
 
-from constants import ENV
+from app.constants import ENV
 
 
 @asynccontextmanager

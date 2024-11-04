@@ -3,11 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from api.connectors.db_connection_session import Database
-from api.dto.token import TokenOutputDto
-from api.dto.user import OutputTokenUserDto
-from api.security.token import authenticate_user, create_access_token, get_current_user
-from constants import ACCESS_TOKEN_EXPIRE_MINUTES
+from app.api.dependencies.database import get_db
+from app.schemas.token import TokenOutputDto
+from app.schemas.user import OutputTokenUserDto
+from app.api.dependencies.security import authenticate_user, create_access_token, get_current_user
+from app.constants import ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 router = APIRouter()
@@ -16,7 +16,7 @@ router = APIRouter()
 @router.post("/login")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    session=Depends(Database().session)
+    session=Depends(get_db)
 ) -> TokenOutputDto:
     user = await authenticate_user(form_data.username, form_data.password, session)
     if not user:

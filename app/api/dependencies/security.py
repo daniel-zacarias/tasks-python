@@ -3,13 +3,23 @@ from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jwt import InvalidTokenError, decode, encode
-from api.connectors.db_connection_session import Database
-from api.services.user import get_user
-from api.utils.cripto_password import verify_password
-from constants import SECRET_KEY
-from api.dto.user import OutputTokenUserDto
+from app.api.dependencies.database import get_db
+from app.domain.services.user import get_user
+from app.constants import SECRET_KEY
+from app.schemas.user import OutputTokenUserDto
+from passlib.context import CryptContext
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
 
 
 async def authenticate_user(username: str, password: str, session):
@@ -33,7 +43,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme),
-                           session=Depends(Database().session)):
+                           session=Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -57,3 +67,5 @@ async def get_current_user(token: str = Depends(oauth2_scheme),
         name=user.name,
         email=user.email
     )
+
+

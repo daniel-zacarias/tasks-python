@@ -1,6 +1,6 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-from api.entities.base import CommonFields
+from app.infraestructure.orm_models.base import CommonFields
 
 
 class Task(CommonFields):

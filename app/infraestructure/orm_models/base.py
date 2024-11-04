@@ -3,7 +3,7 @@ from sqlalchemy import Column, DateTime, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
-from constants import TIMEZONE
+from app.constants import TIMEZONE
 
 Base = declarative_base()
 

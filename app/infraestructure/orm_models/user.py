@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String
-from api.entities.base import CommonFields
+from app.infraestructure.orm_models.base import CommonFields
 from sqlalchemy.orm import relationship
 
 
